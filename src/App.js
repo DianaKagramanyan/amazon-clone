@@ -22,7 +22,7 @@ const Layout = () => {
 }
 
 function App() {
-  const router = createBrowserRouter(createRoutesFromElements(
+  const router =  createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<Layout/>}>
       <Route index element={<Home/>} loader={productsData}></Route>
     </Route>
