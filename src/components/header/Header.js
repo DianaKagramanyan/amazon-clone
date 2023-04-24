@@ -41,7 +41,7 @@ const Header = () => {
           <p className="flex flex-col text-xs text-lightText font-light">
             Deliver to{" "}
             <span className="text-sm font-semibold -mt-1 text-whiteText">
-              Oman
+              New York
             </span>
           </p>
         </div>
