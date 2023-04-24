@@ -9,7 +9,7 @@ import {
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
 import {productsData} from "./api/api";
-import Signing from "./pages/Signing";
+import Cart from "./pages/Cart";
 
 
 const Layout = () => {
@@ -26,7 +26,7 @@ function App() {
   const router =  createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<Layout/>}>
       <Route index element={<Home/>} loader={productsData}></Route>
-      <Route path="/signing" element={<Signing/>}></Route>
+      <Route path="/cart" element={<Cart/>}></Route>
     </Route>
   ))
   return (
