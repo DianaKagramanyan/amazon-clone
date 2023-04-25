@@ -1,6 +1,7 @@
 import React from 'react';
 import {darkLogo} from "../assets/index";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import {Link} from "react-router-dom";
 
 const Signin = () => {
   return (
@@ -43,13 +44,14 @@ const Signin = () => {
             <span className="w-1/3 text-center">New to Amazon</span>
             <span className="w-1/3 h-[1px] bg-zinc-400 inline-flex"></span>
           </p>
+        <Link className="w-full" to='/registration'>
           <button
-            onClick={(e) => e.preventDefault()}
             className="w-full py-1.5 mt-4 text-sm font-normal rounded-sm
             bg-gradient-to-t from-slate-200 to-slate-100 hover:bg-gradient-to-b border
             border-zinc-400 active:border-yellow-800 active:shadow-amazonInput">
             Create your Amazon account
           </button>
+        </Link>
         </form>
       </div>
       <div className="w-full bg-gradient-to-t from-white via-white to-zinc-200 flex
