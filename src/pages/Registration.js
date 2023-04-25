@@ -14,7 +14,7 @@ const Registration = () => {
     setClientName(e.target.value)
   }
   const handleRegistration =(e)=> {
-    e.safePreventDefault()
+    e.preventDefault()
     console.log(clientName)
   }
   return (
