@@ -5,6 +5,7 @@ import {
   Outlet,
   Route,
   RouterProvider,
+  ScrollRestoration,
 } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
@@ -16,6 +17,7 @@ const Layout = () => {
   return (
     <div>
       <Header/>
+      <ScrollRestoration/>
       <Outlet/>
       <Footer/>
     </div>
