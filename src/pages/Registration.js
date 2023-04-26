@@ -229,8 +229,9 @@ const Registration = () => {
                   <div className="flex justify-center">
                     <RotatingLines
                       strokeColor="#febd69"
-                      strokeWidth="50"
-                      automationDuration="0.75"
+                      strokeWidth="5"
+                      animationDuration="0.75"
+                      width="96"
                       visible={true}
                     />
                   </div>
