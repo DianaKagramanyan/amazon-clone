@@ -1,13 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { darkLogo } from "../assets/index";
+import {darkLogo} from "../assets/index";
 
 const Registration = () => {
+  const auth = getAuth();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
+  const [firebaseErr, setFirebaseErr] = useState("");
+
+  //Loading state start
+  const[loading,  setLoading] = useState(false);
+  const[successMsg, setSuccessMsg] = useState("")
+
 
   // Error Message start
   const [errClientName, setErrClientName] = useState("");
@@ -51,6 +59,7 @@ const Registration = () => {
     }
     if (!email) {
       setErrEmail("Enter your email");
+      setFirebaseErr("")
     } else {
       if (!emailValidation(email)) {
         setErrEmail("Enter a valid email");
@@ -80,12 +89,31 @@ const Registration = () => {
       cPassword &&
       cPassword === password
     ) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: clientName,
+            photoURL: "https://www.google.com/url?sa=i&url=https%3A%2F%2Freedsy.com%2Fdiscovery%2Fblog%2Flove-poems&psig=AOvVaw3KfMYtCxFWPHYg8UMXf5MC&ust=1682607604447000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCNjMvfbnx_4CFQAAAAAdAAAAABAE"
+          })
+          // Signed in
+          const user = userCredential.user;
+          console.log(user)
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setFirebaseErr("Email already in use, Try another one ")
+          }
+          // ..
+        });
       // =========== Firebase Registration End here ===============
       setClientName("");
       setEmail("");
       setPassword("");
       setCPassword("");
       setErrCPassword("");
+      setFirebaseErr("");
     }
   };
   return (
@@ -93,7 +121,7 @@ const Registration = () => {
       <div className="w-full bg-gray-100 pb-10">
         <form className="w-[370px] mx-auto flex flex-col items-center">
           <Link to="/">
-            <img className="w-32" src={darkLogo} alt="darkLogo" />
+            <img className="w-32" src={darkLogo} alt="darkLogo"/>
           </Link>
           <div className="w-full border border-zinc-200 p-6">
             <h2 className="font-titleFont text-3xl font-medium mb-4">
@@ -133,6 +161,14 @@ const Registration = () => {
                       !
                     </span>
                     {errEmail}
+                  </p>
+                )}
+                {firebaseErr && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>
+                    {firebaseErr}
                   </p>
                 )}
 
@@ -190,17 +226,19 @@ const Registration = () => {
               <p className="text-xs text-black">
                 Already have an account?{" "}
                 <Link to="/signin">
-                  <span className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
+                  <span
+                    className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
                     Sign in{" "}
                     <span>
-                      <ArrowRightIcon />
+                      <ArrowRightIcon/>
                     </span>
                   </span>
                 </Link>
               </p>
               <p className="text-xs text-black -mt-2">
                 Buying for work?{" "}
-                <span className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
+                <span
+                  className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
                   Create a free business account
                 </span>
               </p>
@@ -208,15 +246,19 @@ const Registration = () => {
           </div>
         </form>
       </div>
-      <div className="w-full bg-gradient-to-t from-white via-white to-zinc-200 flex flex-col gap-4 justify-center items-center py-10">
+      <div
+        className="w-full bg-gradient-to-t from-white via-white to-zinc-200 flex flex-col gap-4 justify-center items-center py-10">
         <div className="flex items-center gap-6">
-          <p className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
+          <p
+            className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
             Conditions of Use
           </p>
-          <p className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
+          <p
+            className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
             Privacy Notice
           </p>
-          <p className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
+          <p
+            className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
             Privacy Notice
           </p>
         </div>
