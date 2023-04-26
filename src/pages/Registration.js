@@ -1,10 +1,13 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import {darkLogo} from "../assets/index";
+import {motion} from "framer-motion";
+import {RotatingLines} from "react-loader-spinner";
 
 const Registration = () => {
+  const navigate = useNavigate()
   const auth = getAuth();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,8 +16,8 @@ const Registration = () => {
   const [firebaseErr, setFirebaseErr] = useState("");
 
   //Loading state start
-  const[loading,  setLoading] = useState(false);
-  const[successMsg, setSuccessMsg] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("")
 
 
   // Error Message start
@@ -89,6 +92,7 @@ const Registration = () => {
       cPassword &&
       cPassword === password
     ) {
+      setLoading(true)
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           updateProfile(auth.currentUser, {
@@ -97,7 +101,11 @@ const Registration = () => {
           })
           // Signed in
           const user = userCredential.user;
-          console.log(user)
+          setLoading(false)
+          setSuccessMsg("Account Created Successfully!")
+          setTimeout(() => {
+            navigate("/signin")
+          }, 3000)
           // ...
         })
         .catch((error) => {
@@ -216,6 +224,31 @@ const Registration = () => {
               >
                 Continue
               </button>
+              {
+                loading && (
+                  <div className="flex justify-center">
+                    <RotatingLines
+                      strokeColor="#febd69"
+                      strokeWidth="50"
+                      automationDuration="0.75"
+                      visible={true}
+                    />
+                  </div>
+                )}
+              {
+                successMsg && (
+                  <div>
+                    <motion.p
+                      initial={{y: 10, opacity: 0}}
+                      animate={{y: 0, opacity: 1}}
+                      transition={{duration: 0.5}}
+                      className="text-base font-titleFont font-semibold text-green-500 border-[1px]
+                    border-green-500 px-2 text-center"
+                    >
+                      {successMsg}</motion.p>
+                  </div>
+                )
+              }
             </div>
             <p className="text-xs text-black leading-4 mt-4">
               By Continuing, you agree to Amazon's{" "}
