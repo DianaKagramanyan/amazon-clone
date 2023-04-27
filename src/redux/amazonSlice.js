@@ -45,6 +45,10 @@ export const amazonSlice = createSlice({
     // ============= Product Reducers End here =================
     // ============= UserInfo Reducers Start here ==============
     // User authentication
+    setUserInfo:(state, action)=>{
+      state.userInfo =  action.payload
+    }
+
 
     // ============= UserInfo Reducers End here ================
   },
@@ -56,6 +60,7 @@ export const {
   resetCart,
   increaseQuantity,
   decreaseQuantity,
+  setUserInfo,
 
 } = amazonSlice.actions;
 export default amazonSlice.reducer;

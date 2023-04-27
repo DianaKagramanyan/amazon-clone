@@ -231,7 +231,7 @@ const Registration = () => {
                       strokeColor="#febd69"
                       strokeWidth="5"
                       animationDuration="0.75"
-                      width="96"
+                      width="50"
                       visible={true}
                     />
                   </div>
