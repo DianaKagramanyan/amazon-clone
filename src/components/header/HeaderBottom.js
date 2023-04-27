@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, {useEffect, useRef, useState} from "react";
+import {motion} from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SideNavContent from "./SideNavContent";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 
 const HeaderBottom = () => {
   const userInfo = useSelector((state) => state.amazonReducer.userInfo);
@@ -25,7 +25,7 @@ const HeaderBottom = () => {
           onClick={() => setSidebar(true)}
           className="flex items-center gap-1 headerHover"
         >
-          <MenuIcon />
+          <MenuIcon/>
           All
         </li>
         <li className="hidden md:inline-flex headerHover">Today's Deals</li>
@@ -41,9 +41,9 @@ const HeaderBottom = () => {
           <div className="w-full h-full relative">
             <motion.div
               ref={ref}
-              initial={{ x: -500, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              initial={{x: -500, opacity: 0}}
+              animate={{x: 0, opacity: 1}}
+              transition={{duration: 0.5}}
               className="w-[290px] md:w-[350px] h-full bg-white border border-black"
             >
               <div className="w-full bg-amazon_light text-white py-2 px-6 flex items-center gap-4">
@@ -54,11 +54,18 @@ const HeaderBottom = () => {
                     alt="UserImg"
                   />
                 ) : (
-                  <AccountCircleIcon />
+                  <AccountCircleIcon/>
                 )}
-                <h3 className="font-titleFont font-bold text-lg tracking-wide">
-                  Hello, Sign In
-                </h3>
+                {
+                  userInfo ? (
+                    <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                      {userInfo.userName}
+                    </h3>
+                  ) : (
+                    <h3 className="font-titleFont font-bold text-lg tracking-wide">
+                      Hello, Sign In
+                    </h3>
+                  )}
               </div>
               {/* ============================ Content & Devices Start here ================ */}
               <SideNavContent
@@ -90,7 +97,7 @@ const HeaderBottom = () => {
                 onClick={() => setSidebar(false)}
                 className="cursor-pointer absolute top-0 left-[300px] md:left-[360px] w-10 h-10 text-black flex items-center justify-center border bg-gray-200 hover:bg-red-500 hover:text-white duration-300"
               >
-                <CloseIcon />
+                <CloseIcon/>
               </span>
             </motion.div>
           </div>
