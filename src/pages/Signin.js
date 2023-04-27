@@ -158,14 +158,18 @@ const Signin = () => {
                   >
                     Continue
                   </button>
-                  <RotatingLines
-                    strokeColor="#febd69"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    width="50"
-                    visible={true}
-                  />
-
+                  {
+                    loading && (
+                      <div className="flex justify-center">
+                        <RotatingLines
+                          strokeColor="#febd69"
+                          strokeWidth="5"
+                          animationDuration="0.75"
+                          width="50"
+                          visible={true}
+                        />
+                      </div>
+                    )}
                 </div>
                 <p className="text-xs text-black leading-4 mt-4">
                   By Continuing, you agree to Amazon's{" "}
