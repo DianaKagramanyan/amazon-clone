@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import { getAuth, signOut } from "firebase/auth";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,8 +10,11 @@ import {allItems} from "../../constants";
 import {logo} from "../../assets/index";
 import HeaderBottom from "./HeaderBottom";
 import {Link} from "react-router-dom";
+import {userSignOut} from "../../redux/amazonSlice";
 
 const Header = () => {
+  const auth = getAuth();
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.amazonReducer.products);
   const userInfo = useSelector((state) => state.amazonReducer.userInfo);
   const ref = useRef();
@@ -24,6 +28,14 @@ const Header = () => {
     });
   }, [ref, showAll]);
 
+  const handleLogout=()=>{
+    signOut(auth).then(() => {
+      console.log("Sign-out successfully.");
+      dispatch(userSignOut())
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 
   return (
     <div className="sticky top-0 z-50">
@@ -130,8 +142,7 @@ const Header = () => {
           </div>
         </Link>
         {userInfo && (
-          <div
-
+          <div onClick={handleLogout}
             className="flex flex-col justify-center items-center headerHover relative"
           >
             <LogoutIcon/>

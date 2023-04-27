@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
+
 const initialState = {
   products: [],
   userInfo: null,
@@ -45,10 +46,12 @@ export const amazonSlice = createSlice({
     // ============= Product Reducers End here =================
     // ============= UserInfo Reducers Start here ==============
     // User authentication
-    setUserInfo:(state, action)=>{
-      state.userInfo =  action.payload
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload
+    },
+    userSignOut: (state) => {
+      state.userInfo = null
     }
-
 
     // ============= UserInfo Reducers End here ================
   },
@@ -61,6 +64,7 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   setUserInfo,
+  userSignOut,
 
 } = amazonSlice.actions;
 export default amazonSlice.reducer;
